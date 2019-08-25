@@ -4,7 +4,6 @@
 @section('page_desc', 'DBF Viewer by Riko Logwirno')
 
 @section('main_content')
-
 <div class="row">
     <div class="col-10 mx-auto" style="margin-bottom: 20px;">
         <form action="{{ route('upload') }}" method="POST" enctype="multipart/form-data">
@@ -54,6 +53,9 @@
         <p>
             Records Found: {{ $datas->recordCount }}
         </p>
+        <p>
+            DBF Checksum:  {{ $dbf_checksum }}
+        </p>
         <p style="margin-top: 20px;">
             Elapsed Time:&nbsp;
             @php
@@ -65,5 +67,29 @@
 
     </div>
 </div>
+@endsection
 
+@section('js_script')
+<script>
+    var last_checksum = "{{ $dbf_checksum }}";
+    function check_update() {
+        $.ajax({
+            type: "GET",
+            url: "{{ route('get_checksum') }}",
+            dataType: "json",
+            success: function (response) {
+                if(response.checksum != last_checksum) {
+                    $("#new-update").html("DBF has been updated, <a href='{{ route("index") }}'>Click Here to Refresh Page</a>").removeClass("d-none");
+                    clearInterval(checkInterval);
+                }
+            },
+            error: function(response) {
+                console.log('check update checksum error', response);
+            }
+        });
+    }
+    var checkInterval = setInterval(function() {
+        check_update();
+    }, 3000);
+</script>
 @endsection

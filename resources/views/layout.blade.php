@@ -46,6 +46,19 @@
             </div>
         </div>
 
+        <div style="row">
+            <div class="col-10 mx-auto">
+                <div class="alert alert-primary d-none" id="new-update" role="alert">
+
+                </div>
+                @if (Session::has("status"))
+                    <div class="alert alert-primary" role="alert">
+                        {{ Session::get("status") }}
+                    </div>
+                @endif
+            </div>
+        </div>
+
         {{-- Content disini --}}
         @section('main_content')
 
@@ -53,4 +66,7 @@
 
     </div>
 </body>
+@section('js_script')
+
+@show
 </html>

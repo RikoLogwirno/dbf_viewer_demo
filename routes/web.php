@@ -35,3 +35,4 @@ Route::get('/logout', function(Request $request) {
 Route::get('/', 'DBFController')->name('index')->middleware('cek_session');
 Route::get('/page/{offset}', 'DBFController')->name('page')->middleware('cek_session');
 Route::post('/uploaddbffile/', 'DBFController@upload')->name('upload')->middleware('cek_session');
+Route::get('/get_checksum/', 'DBFController@get_dbf_checksum')->name('get_checksum')->middleware('cek_session');
